@@ -11,3 +11,95 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.I-Pod
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    height: 600px;
+    position: absolute;
+    top: 55px;
+    border-radius: 35px;
+    left: 30%;
+    background: #dbdbdf;
+    box-shadow: #bbbbbb 0px 0px 60px inset;
+    -webkit-box-reflect: below -1px -webkit-gradient(linear, right top, right bottom, from(transparent), to(rgba(255, 255, 255, 0.4)));
+}
+
+.I-Pod .screen{
+  border-radius: 20px;
+  border: 3.5px solid;
+  height: 235px;
+  width: 92%;
+  margin-bottom: 25px;
+}
+
+.I-Pod .button-set
+{
+  width: 290px;
+  height: 252px;
+  border-radius: 50%;
+  background: #FCFCFF;
+  position: relative;
+}
+
+.I-Pod .button-set .inner-circle
+{
+  position: absolute;
+  top: 2.1%;
+  left: 0.7%;
+  height: 252px;
+  width: 290px;
+  transform: scale(0.4);
+  border-radius: 50%;
+  background: #B7B7BE;
+  border: none;
+  cursor: pointer;
+}
+
+.I-Pod .button-set .inner-circle:focus
+{
+  outline: none;
+}
+
+.I-Pod .button-set .button-set-text
+{
+    font-size: 22px;
+    text-transform: uppercase;
+    font-family: ui-serif;
+    height: 35px;
+}
+
+.I-Pod .button-set .menu
+{
+  position: absolute;
+  color: #c2c2bf;
+  left: 38.65%;
+  top: 14%;
+}
+
+.I-Pod .button-set .forward{
+  position: absolute;
+  top: 44%;
+  left: 79%;
+  opacity: 0.6;
+}
+
+.I-Pod .button-set .backward{
+    position: absolute;
+    top: 43%;
+    left: 10%;
+    opacity: 0.6;
+    height: 37.7px;
+}
+
+.I-Pod .button-set .play{
+  position: absolute;
+  top: 79.5%;
+  left: 44%;
+  opacity: 0.6;
+  transform: scale(1.25);
+}
