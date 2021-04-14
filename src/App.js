@@ -1,6 +1,8 @@
 import React from 'react';
 import ZingTouch from 'zingtouch';
 import $ from 'jquery';
+import Games from './Games';
+import Music from './Music';
 
 class App extends React.Component {
 
@@ -13,7 +15,10 @@ class App extends React.Component {
       menuDisplay:false,
       options:['Games','Music','Settings','Coverflow'],
       general_menu:['Games','Music','Settings','Coverflow'],
+      sub_menu:['All Songs','Artists','Covers'],
       selected:0,
+      showPage:-1,
+      musicOptionSelected:false
     }
   }
   
@@ -58,23 +63,56 @@ class App extends React.Component {
     if(!menuDisplay)
     {
       $(".small-screen").addClass('menuToggle');
-        this.setState({
+      $(".small-screen").removeClass('menuToggle2');
+      $(".small-screen").css({"left":-145});
+      this.setState({
           menuDisplay:true
-        });
+      });
     }
     else
     {
       $(".small-screen").removeClass('menuToggle');
+      $(".small-screen").addClass('menuToggle2');
+      $(".small-screen").css({"left":-0.5});
       this.setState({
         menuDisplay:false
       });
     }
   }
 
+  selectedClickedButton = () => {
+    if(document.getElementsByClassName('small-screen')[0].classList.contains('menuToggle'))
+    {
+        $(".small-screen").removeClass('menuToggle');
+        $(".small-screen").addClass('menuToggle2');
+        $(".small-screen").css({"left":-0.5});
+        const {selected,options,sub_menu}=this.state;
+        if(options.length===4)
+        {
+            if(selected!==1)
+            {
+              this.setState({
+                showPage:selected,
+                musicOptionSelected:false
+              });
+            }
+            else
+            {
+              this.setState({
+                selected:0,
+                options:sub_menu,
+                showPage:-1,
+                musicOptionSelected:true,
+              })
+            }
+        }
+    }
+    this.menuClicked();
+  }
 
   render()
   {
-    const {general_menu,selected}=this.state;
+    const {options,selected,showPage,musicOptionSelected}=this.state;
     return (
       <div className="App">
           <div className="I-Pod">
@@ -85,7 +123,7 @@ class App extends React.Component {
                     
                     <div className="list-items">
 
-                        {general_menu.map((item,index)=>{
+                        {options.map((item,index)=>{
                             return (
                             <button 
                             className={selected===index ? 'selected' : ''} 
@@ -95,15 +133,21 @@ class App extends React.Component {
                         })}
 
                     </div>
-
                 </div>
+
+                {options.length===4 && showPage===0 && <Games/>}
+                {musicOptionSelected && <Music/>}
   
               </div>
+
+
+
+
               <div className="button-set">
                   <button className="button-set-text menu" onClick={this.menuClicked}>Menu</button>
                   <button className="button-set-text forward"> <i className="fas fa-forward"></i> </button>
                   <button className="button-set-text backward"><i className="fas fa-backward"></i></button>
-                  <button className="inner-circle">
+                  <button className="inner-circle" onClick={this.selectedClickedButton}>
 
                   </button>
                   <button className="button-set-text play"><i className="fas fa-play"></i><i className="fas fa-pause"></i></button>

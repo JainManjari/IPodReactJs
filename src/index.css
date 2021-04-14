@@ -44,6 +44,7 @@ code {
   background-size: cover;
   background-position-y: center;
   opacity: 0.9;
+  overflow: hidden;
 }
 
 .I-Pod .screen .small-screen{
@@ -53,9 +54,60 @@ code {
   height: 99.2%;
   background: #e9baba;
   border-radius: 15.8px 0px 0px 15.8px;
-  visibility: hidden;
-  left:-0.5px;
+  left:-145px;
 }
+
+.menuToggle
+{
+    animation: sliding-f 0.2s 0.12s ease-in-out forwards;
+}
+
+@keyframes sliding-f {
+
+  0%{
+    left: -145px;
+  }
+  50%{
+    left: -55px;
+  }
+
+  100%{
+    left: -0.5px;
+  }
+  
+}
+
+.menuToggle2
+{
+    animation: sliding-b 0.2s 0.12s forwards;
+}
+
+@keyframes sliding-b {
+
+  0%{
+    left: -0.5px;
+  }
+  50%{
+    left: -55px;
+  }
+
+  100%{
+    left: -145px;
+  }
+  
+}
+
+.game-screen,.music-screen
+{
+    background: white;
+    height: inherit;
+    margin-top: -22px;
+    text-align: center;
+    padding-top: 50px;
+    text-transform: uppercase;
+    font-style: oblique;
+}
+
 
 .I-Pod .screen .small-screen .title
 {
@@ -98,11 +150,6 @@ code {
 .I-Pod .screen .small-screen .list-items button:focus
 {
   outline: none;
-}
-
-.menuToggle
-{
-  visibility: visible !important;
 }
 
 .I-Pod .button-set
