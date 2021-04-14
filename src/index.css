@@ -57,6 +57,49 @@ code {
   left:-0.5px;
 }
 
+.I-Pod .screen .small-screen .title
+{
+    font-size: 22px;
+    text-align: center;
+    text-transform: uppercase;
+    font-style: italic;
+    display: block;
+    margin-bottom: 15px;
+    margin-top: 12px;
+}
+
+.I-Pod .screen .small-screen .list-items
+{
+  display: flex;
+  flex-direction: column;
+  margin-top: 22px;
+}
+
+.I-Pod .screen .small-screen .list-items button
+{
+    padding: 5px;
+    padding-left: 20px;
+    list-style: none;
+    font-size: 14px;
+    color: sienna;
+    font-weight: 550;
+    background: lightcyan;
+    border: none;
+    cursor: pointer;
+    height: 30px;
+    display: flex;
+}
+
+.selected
+{
+  background:#8181cd !important;
+}
+
+.I-Pod .screen .small-screen .list-items button:focus
+{
+  outline: none;
+}
+
 .menuToggle
 {
   visibility: visible !important;
