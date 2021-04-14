@@ -99,15 +99,36 @@ code {
 
 .game-screen,.music-screen
 {
-    background: white;
-    height: inherit;
-    margin-top: -22px;
-    text-align: center;
-    padding-top: 50px;
-    text-transform: uppercase;
-    font-style: oblique;
+  height: inherit;
+  margin-top: -10px;
+  padding: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  font-style: oblique;
+  background:antiquewhite;
 }
 
+
+.game-title,.music-title
+{
+  color:darkslategrey;
+  display: block;
+  margin-top: 50px;
+}
+
+.game-icons,.music-icons
+{
+    display: flex;
+    justify-content: space-around;
+    width: 135px;
+    margin: auto;
+}
+
+.game-icons svg,.music-icons svg
+{
+   font-size: 30px;
+   color:darkslateblue;
+}
 
 .I-Pod .screen .small-screen .title
 {
