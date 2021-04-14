@@ -3,6 +3,8 @@ import ZingTouch from 'zingtouch';
 import $ from 'jquery';
 import Games from './Games';
 import Music from './Music';
+import Settings from './Settings';
+import Coverflow from './Coverflow';
 
 class App extends React.Component {
 
@@ -110,6 +112,15 @@ class App extends React.Component {
     this.menuClicked();
   }
 
+  homeClicked = () => {
+      this.setState({
+        options:this.state.general_menu,
+        showPage:-1,
+        selected:0,
+        musicOptionSelected:false
+      })
+  }
+
   render()
   {
     const {options,selected,showPage,musicOptionSelected}=this.state;
@@ -117,7 +128,9 @@ class App extends React.Component {
       <div className="App">
           <div className="I-Pod">
               <div className="screen">
-
+                <button className="home-button" onClick={this.homeClicked}>
+                   <i className="fas fa-home"></i>
+                </button>
                 <div className="small-screen">
                     <span className="title">MadJerry's IPod!</span> 
                     
@@ -137,6 +150,8 @@ class App extends React.Component {
 
                 {options.length===4 && showPage===0 && <Games/>}
                 {musicOptionSelected && <Music/>}
+                {options.length===4 && showPage===2 && <Settings/>}
+                {options.length===4 && showPage===3 && <Coverflow/>}
   
               </div>
 

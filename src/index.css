@@ -47,6 +47,30 @@ code {
   overflow: hidden;
 }
 
+
+.I-Pod .screen .home-button
+{
+  border: none;
+  background: #894969;
+  position: absolute;
+  right: 25px;
+  top: 14px;
+  border-radius: 50%;
+  height: 35px;
+  cursor: pointer;
+}
+
+.I-Pod .screen .home-button svg
+{
+  font-size: 22px;
+  color:powderblue;
+}
+
+.I-Pod .screen .home-button:focus
+{
+  outline: none;
+}
+
 .I-Pod .screen .small-screen{
   position: absolute;
   border: 1px solid #e9baba;
@@ -97,7 +121,7 @@ code {
   
 }
 
-.game-screen,.music-screen
+.game-screen,.music-screen,.setting-screen,.coverflow-screen
 {
   height: inherit;
   margin-top: -10px;
@@ -105,18 +129,20 @@ code {
   text-align: center;
   text-transform: uppercase;
   font-style: oblique;
-  background:antiquewhite;
+  background: linear-gradient(
+    180deg
+    ,antiquewhite, lightpink);
 }
 
 
-.game-title,.music-title
+.game-title,.music-title,.setting-title,.coverflow-title
 {
   color:darkslategrey;
   display: block;
   margin-top: 50px;
 }
 
-.game-icons,.music-icons
+.game-icons,.music-icons,.setting-icons,.coverflow-icons
 {
     display: flex;
     justify-content: space-around;
@@ -128,6 +154,12 @@ code {
 {
    font-size: 30px;
    color:darkslateblue;
+}
+
+.setting-icons svg,.coverflow-icons svg
+{
+  font-size: 45px;
+  color: darkslateblue;
 }
 
 .I-Pod .screen .small-screen .title
@@ -178,7 +210,7 @@ code {
   width: 290px;
   height: 252px;
   border-radius: 50%;
-  background: #d68e24;
+  background:radial-gradient(circle at -100px -100px,darkslategrey,#170d0d);
   position: relative;
 }
 
@@ -196,16 +228,19 @@ code {
 
 .I-Pod .button-set .inner-circle
 {
-  position: absolute;
-  top: 2.1%;
-  left: 0.7%;
-  height: 252px;
-  width: 290px;
-  transform: scale(0.4);
-  border-radius: 50%;
-  background: #af1741;
-  border: none;
-  cursor: pointer;
+    position: absolute;
+    top: 2.1%;
+    left: 3%;
+    height: 245px;
+    width: 275px;
+    transform: scale(0.4);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: block;
+    margin: 0;
+    background: radial-gradient(circle at 100px 100px,#af1741 , #000);
+  
 }
 
 .I-Pod .button-set .inner-circle:focus
@@ -215,15 +250,17 @@ code {
 
 .I-Pod .button-set .button-set-text svg
 {
-    font-size: 22px;
+    font-size: 26px;
     text-transform: uppercase;
     font-family: ui-serif;
+    color: silver;
 }
 
 .I-Pod .button-set .menu
 {
   position: absolute;
-  color: #53534d;
+  color: #bdbdbd;
+  font-weight: 550;
   left: 38.65%;
   top: 14%;
   font-size: 22px;
@@ -248,7 +285,7 @@ code {
 .I-Pod .button-set .play{
   position: absolute;
   top: 79.5%;
-  left: 44%;
+  left: 43%;
   opacity: 0.6;
 }
 
