@@ -81,6 +81,39 @@ code {
   left:-145px;
 }
 
+.I-Pod .screen .small-screen .instruct
+{
+  font-size: 13px;
+  text-align: center;
+  margin-top: 10px;
+  word-spacing: 2px;
+  color: #0a474e;
+  font-variant: common-ligatures;
+}
+
+
+@keyframes highlighting {
+
+  0%{
+    color: orange;
+  }
+
+  50%
+  {
+    color: orangered;
+  }
+
+  100%{
+    color: blue;
+  }
+  
+}
+
+.I-Pod .screen .small-screen .instruct q
+{
+  margin-right: 3px;
+}
+
 .menuToggle
 {
     animation: sliding-f 0.2s 0.12s ease-in-out forwards;
@@ -161,6 +194,51 @@ code {
   font-size: 45px;
   color: darkslateblue;
 }
+
+
+.songs-screen
+{
+  height: inherit;
+  background: coral;
+  margin-top: -21px;
+}
+
+.songs-title
+{
+  text-align: center;
+  display: block;
+  padding-top: 15px;
+  color:navy;
+  font-variant-caps: small-caps;
+}
+
+.songs-list
+{
+  height: 115px;
+  text-align: center;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  margin: -5px auto 0px;
+  box-sizing: border-box;
+}
+
+.songs-list li 
+{
+  list-style: none;
+  padding: 2px;
+  border-bottom: 2px solid rosybrown;
+  background: wheat;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 500;
+}
+
+
+
+
+
+
 
 .I-Pod .screen .small-screen .title
 {
@@ -248,12 +326,17 @@ code {
   outline: none;
 }
 
+.I-Pod .button-set .button-set-text
+{
+  color:silver;
+}
+
 .I-Pod .button-set .button-set-text svg
 {
     font-size: 26px;
     text-transform: uppercase;
     font-family: ui-serif;
-    color: silver;
+    color: inherit;
 }
 
 .I-Pod .button-set .menu
@@ -294,3 +377,15 @@ code {
   font-size: 19px;
   margin-right: 5px;
 }
+
+
+.spkl
+{
+  color:#fff59d !important;
+}
+
+.songs-highlight
+{
+  color: teal;
+}
+
