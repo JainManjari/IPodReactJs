@@ -6,6 +6,7 @@ import Music from './Music';
 import Settings from './Settings';
 import Coverflow from './Coverflow';
 import Songs from './Songs';
+import PlayMusic from './PlayMusic';
 
 class App extends React.Component {
 
@@ -22,13 +23,15 @@ class App extends React.Component {
       selected:0,
       showPage:-1,
       musicOptionSelected:false,
-      subMenuSelection:false,
+      allSongsSelection:false,
       current_music_select:0,
       songs:["Little Mix : Black Magic",
              "Demi Lovato : This is Me",
              "Miley Cyrus : The Climb",
              "Good Girls",
              "Rachel Flatten : Fight Song"],
+      playMusicPlayer:false,
+      song_index:-1,
     }
   }
   
@@ -91,19 +94,23 @@ class App extends React.Component {
   }
 
   selectedClickedButton = () => {
+    const {selected,
+      options,
+      allSongsSelection,
+      sub_menu,
+      musicOptionSelected,
+      current_music_select}=this.state;
     if(document.getElementsByClassName('small-screen')[0].classList.contains('menuToggle'))
     {
-        $(".small-screen").removeClass('menuToggle');
-        $(".small-screen").addClass('menuToggle2');
-        $(".small-screen").css({"left":-0.5});
-        const {selected,options,sub_menu,musicOptionSelected}=this.state;
         if(options.length===4)
         {
             if(selected!==1)
             {
               this.setState({
                 showPage:selected,
-                musicOptionSelected:false
+                musicOptionSelected:false,
+                playMusicPlayer:false,
+                song_index:-1
               });
             }
             else
@@ -113,26 +120,48 @@ class App extends React.Component {
                 options:sub_menu,
                 showPage:-1,
                 musicOptionSelected:true,
-                current_music_select:0
+                current_music_select:0,
+                playMusicPlayer:false,
+                song_index:-1
               })
             }
         }
-        else
+        else if(options.length===3 && musicOptionSelected)
         {
-          
-          if(musicOptionSelected)
+          if(selected===0)
           {
-            
             this.setState({
               showPage:selected,
-              subMenuSelection:true,
-              current_music_select:0
+              allSongsSelection:true,
+              current_music_select:0,
+              playMusicPlayer:false,
+              song_index:-1
             })
-            
           }
+          else
+          {
+            this.setState({
+              showPage:selected,
+              allSongsSelection:false,
+              current_music_select:0,
+              playMusicPlayer:false,
+              song_index:-1
+            })
+          }
+          
         }
+        
     }
-    this.menuClicked();
+    else if(options.length===3 && musicOptionSelected && allSongsSelection)
+    {
+          
+            console.log("soong select")
+            this.setState({
+                playMusicPlayer:true,
+                song_index:current_music_select
+            })
+          
+      }
   }
 
   homeClicked = () => {
@@ -141,7 +170,10 @@ class App extends React.Component {
         showPage:-1,
         selected:0,
         musicOptionSelected:false,
-        current_music_select:0
+        current_music_select:0,
+        playMusicPlayer:false,
+        song_index:-1,
+        allSongsSelection:false
       })
   }
 
@@ -149,36 +181,43 @@ class App extends React.Component {
   leftClicked = () =>
   {
      const {musicOptionSelected,
-      subMenuSelection,
+      allSongsSelection,
       options,
       current_music_select,
+      playMusicPlayer,
       songs}=this.state;
 
      if(document.getElementsByClassName('small-screen')[0].classList.contains('menuToggle'))
      {
-          if(musicOptionSelected && !subMenuSelection)
+          
+          if(musicOptionSelected && allSongsSelection)
           {
               this.setState({
-              options:this.state.general_menu,
-              selected:0,
-              musicOptionSelected:false,
-              current_music_select:0
-              })
-          }
-          else if(musicOptionSelected && subMenuSelection)
-          {
-              this.setState({
-                subMenuSelection:false,
+                allSongsSelection:false,
                 showPage:-1,
                 selected:0,
                 musicOptionSelected:false,
                 options:this.state.general_menu,
-                current_music_select:0
+                current_music_select:0,
+                playMusicPlayer:false,
+                song_index:-1
               })
             
           }
       }
-      if(options.length===3 && subMenuSelection)
+      if(playMusicPlayer || ( musicOptionSelected && !allSongsSelection))
+      {
+              this.setState({
+              options:this.state.general_menu,
+              selected:0,
+              musicOptionSelected:false,
+              current_music_select:0,
+              showPage:-1,
+              playMusicPlayer:false,
+              allSongsSelection:false
+              })
+      }
+      else if(musicOptionSelected && options.length===3 && allSongsSelection)
       {
         if(current_music_select===0)
         {
@@ -199,11 +238,11 @@ class App extends React.Component {
 
   rightClick = () => {
     const {options,
-          subMenuSelection,
+          allSongsSelection,
           songs,
           current_music_select}=this.state;
 
-    if(options.length===3 && subMenuSelection)
+    if(options.length===3 && allSongsSelection)
     {
         if(current_music_select===songs.length-1)
         {
@@ -227,10 +266,13 @@ class App extends React.Component {
            selected,
            showPage,
            musicOptionSelected,
-           subMenuSelection,
+           allSongsSelection,
            songs,
-           current_music_select}=this.state;
+           current_music_select,
+           playMusicPlayer,
+           song_index}=this.state;
     
+    const music_name=songs[song_index];
     return (
       <div className="App">
           <div className="I-Pod">
@@ -265,13 +307,16 @@ class App extends React.Component {
                       
                     }
                 </div>
-
+                
+                
+                
                 {options.length===4 && showPage===0 && <Games/>}
-                {musicOptionSelected && !subMenuSelection && <Music/>}
+                {musicOptionSelected && !allSongsSelection && <Music/>}
                 {options.length===4 && showPage===2 && <Settings/>}
                 {options.length===4 && showPage===3 && <Coverflow/>}
 
-                {options.length===3 && showPage===0 && <Songs songs={songs} currentSongsListInd={current_music_select}/>}
+                {!playMusicPlayer && options.length===3 && showPage===0 && <Songs songs={songs} currentSongsListInd={current_music_select}/>}
+                {playMusicPlayer && musicOptionSelected && allSongsSelection && <PlayMusic musicName={music_name}/>}
   
               </div>
 
@@ -280,20 +325,23 @@ class App extends React.Component {
 
               <div className="button-set">
                   <button className="button-set-text menu" onClick={this.menuClicked}>Menu</button>
-                  <button className={subMenuSelection ? "button-set-text forward spkl" : "button-set-text forward"}
+                  <button className={allSongsSelection && !playMusicPlayer ? "button-set-text forward spkl1" : "button-set-text forward"}
                    onClick={this.rightClick}
                   > 
                       <i className="fas fa-forward"></i> 
                   </button>
-                  <button className={subMenuSelection ? "button-set-text backward spkl" : "button-set-text backward"}
+                  <button className={allSongsSelection && !playMusicPlayer ? "button-set-text backward spkl1" : "button-set-text backward"}
                   onClick={this.leftClicked}
                   >
-                    <i className="fas fa-backward"></i>
+                     <i className="fas fa-backward"></i>
                   </button>
                   <button className="inner-circle" onClick={this.selectedClickedButton}>
 
                   </button>
-                  <button className="button-set-text play"><i className="fas fa-play"></i><i className="fas fa-pause"></i></button>
+                  <button className={playMusicPlayer ? "button-set-text play spkl1" : "button-set-text play"}>
+                    <i className="fas fa-play"></i>
+                    <i className="fas fa-pause"></i>
+                  </button>
   
               </div>
           </div>
