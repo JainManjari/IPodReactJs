@@ -7,6 +7,8 @@ import Settings from './Settings';
 import Coverflow from './Coverflow';
 import Songs from './Songs';
 import PlayMusic from './PlayMusic';
+import Artists from './Artists';
+import Covers from './Covers';
 
 class App extends React.Component {
 
@@ -19,7 +21,7 @@ class App extends React.Component {
       menuDisplay:false,
       options:['Games','Music','Settings','Coverflow'],
       general_menu:['Games','Music','Settings','Coverflow'],
-      sub_menu:['All Songs','Artists','Covers'],
+      sub_menu:['All Songs','Artists','Cover'],
       selected:0,
       showPage:-1,
       musicOptionSelected:false,
@@ -37,7 +39,8 @@ class App extends React.Component {
                  "https://docs.google.com/uc?export=download&id=1Ux29vmppjUEUmeXgnnmj5HxWf0EH112S"],
       onPlayMusicPage:false,
       song_index:-1,
-      current_playing_music:false
+      current_playing_music:false,
+      sub_menu_selection:false
     }
   }
   
@@ -118,7 +121,9 @@ class App extends React.Component {
                 showPage:selected,
                 musicOptionSelected:false,
                 onPlayMusicPage:false,
-                song_index:-1
+                song_index:-1,
+                sub_menu_selection:false,
+                current_playing_music:false
               });
             }
             else
@@ -130,7 +135,9 @@ class App extends React.Component {
                 musicOptionSelected:true,
                 current_music_select:0,
                 onPlayMusicPage:false,
-                song_index:-1
+                song_index:-1,
+                sub_menu_selection:false,
+                current_playing_music:false
               })
             }
         }
@@ -143,7 +150,9 @@ class App extends React.Component {
               allSongsSelection:true,
               current_music_select:0,
               onPlayMusicPage:false,
-              song_index:-1
+              song_index:-1,
+              sub_menu_selection:true,
+              current_playing_music:false
             })
           }
           else
@@ -153,7 +162,9 @@ class App extends React.Component {
               allSongsSelection:false,
               current_music_select:0,
               onPlayMusicPage:false,
-              song_index:-1
+              song_index:-1,
+              sub_menu_selection:true,
+              current_playing_music:false
             })
           }
           
@@ -163,10 +174,10 @@ class App extends React.Component {
     else if(options.length===3 && musicOptionSelected && allSongsSelection)
     {
           
-            console.log("soong select")
             this.setState({
                 onPlayMusicPage:true,
-                song_index:current_music_select
+                song_index:current_music_select,
+                current_playing_music:false
             })
           
       }
@@ -181,7 +192,9 @@ class App extends React.Component {
         current_music_select:0,
         onPlayMusicPage:false,
         song_index:-1,
-        allSongsSelection:false
+        allSongsSelection:false,
+        sub_menu_selection:false,
+        current_playing_music:false
       })
   }
 
@@ -189,42 +202,48 @@ class App extends React.Component {
   leftClicked = () =>
   {
      const {musicOptionSelected,
+      //sub_menu_selection,
       allSongsSelection,
       options,
       current_music_select,
-      onPlayMusicPage,
+      //onPlayMusicPage,
       songs}=this.state;
 
      if(document.getElementsByClassName('small-screen')[0].classList.contains('menuToggle'))
      {
           
-          if(musicOptionSelected && allSongsSelection)
+          if(musicOptionSelected)
           {
               this.setState({
-                allSongsSelection:false,
+                options:this.state.general_menu,
                 showPage:-1,
                 selected:0,
                 musicOptionSelected:false,
-                options:this.state.general_menu,
                 current_music_select:0,
                 onPlayMusicPage:false,
-                song_index:-1
+                song_index:-1,
+                allSongsSelection:false,
+                sub_menu_selection:false,
+                current_playing_music:false
               })
             
           }
       }
-      if(onPlayMusicPage || ( musicOptionSelected && !allSongsSelection))
-      {
-              this.setState({
-              options:this.state.general_menu,
-              selected:0,
-              musicOptionSelected:false,
-              current_music_select:0,
-              showPage:-1,
-              onPlayMusicPage:false,
-              allSongsSelection:false
-              })
-      }
+      // if(onPlayMusicPage)
+      // {
+      //         console.log("on play music")
+      //         this.setState({
+      //           options:this.state.general_menu,
+      //           showPage:-1,
+      //           selected:0,
+      //           musicOptionSelected:false,
+      //           current_music_select:0,
+      //           onPlayMusicPage:false,
+      //           song_index:-1,
+      //           allSongsSelection:false,
+      //           sub_menu_selection:false
+      //         })
+      // }
       else if(musicOptionSelected && options.length===3 && allSongsSelection)
       {
         if(current_music_select===0)
@@ -295,7 +314,7 @@ class App extends React.Component {
 
     const {song_index,onPlayMusicPage}=this.state;
 
-    if(song_index!==-1 && onPlayMusicPage )
+    if(song_index!==-1 && onPlayMusicPage)
     {
         if($("#audio")[0].paused)
         {
@@ -332,13 +351,13 @@ class App extends React.Component {
            onPlayMusicPage,
            song_index,
            songs_url,
-           current_playing_music
+           current_playing_music,
+           sub_menu_selection
           }=this.state;
     
     const music_name=songs[song_index];
     const music_url=songs_url[song_index];
 
-    console.log(onPlayMusicPage,options.length, showPage);
     return (
       <div className="App">
           <div className="I-Pod">
@@ -377,13 +396,14 @@ class App extends React.Component {
                 
                 
                 {options.length===4 && showPage===0 && <Games/>}
-                {musicOptionSelected && !allSongsSelection && <Music/>}
+                {musicOptionSelected && !sub_menu_selection && <Music/>}
                 {options.length===4 && showPage===2 && <Settings/>}
                 {options.length===4 && showPage===3 && <Coverflow/>}
 
                 {!onPlayMusicPage && options.length===3 && showPage===0 && <Songs songs={songs} currentSongsListInd={current_music_select}/>}
 
-                {!onPlayMusicPage && options.length===3 && showPage===1 && "Artists"}
+                {!onPlayMusicPage && options.length===3 && showPage===1 && <Artists/>}
+                {!onPlayMusicPage && options.length===3 && showPage===2 && <Covers/>}
 
                 {onPlayMusicPage && musicOptionSelected && allSongsSelection && <PlayMusic musicName={music_name} musicURL={music_url} currentPlayingMusic={this.currentPlayingMusic}/>}
   
@@ -392,7 +412,7 @@ class App extends React.Component {
 
 
 
-              <div className={current_playing_music ? "button-set multicolor" : "button-set"} id="buttonSets">
+              <div className={onPlayMusicPage && current_playing_music ? "button-set multicolor" : "button-set"} id="buttonSets">
                   <button className="button-set-text menu" onClick={this.menuClicked}>Menu</button>
                   <button className={allSongsSelection && !onPlayMusicPage && !document.getElementsByClassName('small-screen')[0].classList.contains('menuToggle') ? "button-set-text forward spkl1" : "button-set-text forward"}
                    onClick={this.rightClick}
