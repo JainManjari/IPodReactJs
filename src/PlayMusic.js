@@ -1,7 +1,23 @@
+import React from 'react';
 
-const PlayMusic=(props)=>{
-    const {musicName}=props;
-    return(
+
+class PlayMusic extends React.Component{
+    
+    componentDidMount()
+    {
+        //this.props.currentPlayingMusic();
+    }
+
+    componentWillUnmount()
+    {
+        //this.props.currentPlayingMusic();
+    }
+
+    render(){
+        const {musicName,musicURL}=this.props;
+
+        return(
+        
         <div className="play-song">
 
             <h1 className="play-song-title">Music!!</h1>
@@ -9,9 +25,14 @@ const PlayMusic=(props)=>{
             <p className="play-song-name">
                 {musicName}
             </p>
+            
+            <audio controls="seeking" src={musicURL} id="audio"
+              type="audio/mpeg">
+              
+            </audio>
 
-        </div>
-    );
+        </div>)
+    }
 }
 
 export default PlayMusic;
